@@ -1,8 +1,7 @@
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "functions.cpp"
-#include <cmath>
+#include "functions.hpp"
 
 /* We will use this renderer to draw into this window every frame. */
 static SDL_Window *window = NULL;
@@ -12,17 +11,9 @@ static SDL_Renderer *renderer = NULL;
 const int WINDOW_SIZE_X = 1920/2;
 const int WINDOW_SIZE_Y = 1080/2;
 
-/* Box movement*/
-float xPos =  100; 
-float yPos = 0; 
-float xIncrement = 0.0001;
-float yIncrement = 0.0001;
-
 /* Mouse following */
 float mousePosX;
 float mousePosY;
-
-
 
 /* This function runs once at startup. */
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
@@ -68,50 +59,14 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);  /* Background color */
     SDL_RenderClear(renderer);  /* start with a blank canvas. */
 
-    //Create rectangle objects
-    SDL_FRect rect;
-    SDL_FRect leftEye;
-    SDL_FRect rightEye;
-    SDL_FRect mouth1;
-    SDL_FRect mouth2;
-    SDL_FRect mouth3;
-    
-    /* draw a filled rectangle in the middle of the canvas. */
-    SDL_SetRenderDrawColor(renderer, 50, 255, 255, SDL_ALPHA_OPAQUE);  /* rectangle color */
-    rect.x = xPos;
-    rect.y = yPos;
-    rect.w = 200;
-    rect.h = 200;
-    SDL_RenderFillRect(renderer, &rect);
-    
-    if (xPos + xIncrement < 0 || xPos + rect.w + xIncrement > WINDOW_SIZE_X) {
-        xIncrement = -xIncrement;
-    }
-    
-    else {
-        xIncrement = fabs(xIncrement);
-    }
-    
-    if (yPos + yIncrement < 0 || yPos + rect.h + yIncrement > WINDOW_SIZE_Y) {
-        yIncrement = -yIncrement;
-    }
-    
-    else {
-        yIncrement = fabs(yIncrement);
-    }
-    
-    xPos += (mousePosX - (xPos + rect.w / 2)) * xIncrement;
-    yPos += (mousePosY - (yPos + rect.h / 2)) * yIncrement;
+    //Create rectangle object
+    static Box myBox(renderer, 200, 50, 255, 255, 200, 200);
 
-    // Eyes
-    drawRectangle(leftEye, renderer, (xPos + rect.w / 2) - 20, yPos + 30, 8, 60, 0, 0, 0);
-    drawRectangle(rightEye, renderer, (xPos + rect.w / 2) + 20, yPos + 30, 8, 60, 0, 0, 0);
+    myBox.updateX(mousePosX);
+    myBox.updateY(mousePosY);
+    myBox.draw(myBox.rectangle.x, myBox.rectangle.y);
+    myBox.drawFace(myBox.rectangle.x, myBox.rectangle.y);
     
-    //Mouth
-    drawRectangle(rightEye, renderer, (xPos + rect.w / 2) - 64,yPos + 100, 8, 60, 0, 0, 0);
-    drawRectangle(rightEye, renderer, (xPos + rect.w / 2) - 64, yPos + 160, 136, 8, 0, 0, 0);
-    drawRectangle(rightEye, renderer, (xPos + rect.w / 2) + 64, yPos + 100, 8, 60, 0, 0, 0);
-
     /* put the newly-cleared rendering on the screen. */
     SDL_RenderPresent(renderer);
     
