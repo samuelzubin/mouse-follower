@@ -1,2 +1,2 @@
 all:
-	g++ src\main.cpp -I D:\Samuel\cpp\games\SDL3-w64\include -I D:\Samuel\cpp\games\SDL3-w64\bin -I D:\Samuel\cpp\games\first-game\include -L D:\Samuel\cpp\games\SDL3-w64\lib -w -Wl,-subsystem,windows -lmingw32 -lSDL3 -o bin\main.exe
+	g++ src\main.cpp -I ..\SDL3-w64\include -I ..\SDL3-w64\bin -I include -L ..\SDL3-w64\lib -w -Wl,-subsystem,windows -lmingw32 -lSDL3 -o bin\main.exe

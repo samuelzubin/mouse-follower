@@ -28,11 +28,11 @@ class Box {
         SDL_FRect mouth2;
         SDL_FRect mouth3;
 
-        float xIncrement = randomSpeed(); //0.000194132
-        float yIncrement = randomSpeed(); //0.00011234;
+        int WINDOW_SIZE_X;
+        int WINDOW_SIZE_Y;
 
-        const int WINDOW_SIZE_X = 1920/2;
-        const int WINDOW_SIZE_Y = 1080/2;
+        float xIncrement = randomSpeed();
+        float yIncrement = randomSpeed();
 
         float size;
         int red;
@@ -42,8 +42,10 @@ class Box {
         float initialPositionX;
         float initialPositionY;
 
-        Box(SDL_Renderer* renderer, float size, int red, int green, int blue, float initialPositionX, float initialPositionY) {
+        Box(SDL_Renderer* renderer, float size, int red, int green, int blue, float initialPositionX, float initialPositionY, int WINDOW_SIZE_X, int WINDOW_SIZE_Y) {
             this->renderer = renderer;
+            this->WINDOW_SIZE_X = WINDOW_SIZE_X;
+            this->WINDOW_SIZE_Y = WINDOW_SIZE_Y;
             this->size = size;
             this->red = red;
             this->green = green;
@@ -105,5 +107,4 @@ class Box {
 
             return rectangle.y;
         }
-            
 };

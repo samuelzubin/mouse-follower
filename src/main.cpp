@@ -1,7 +1,7 @@
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "functions.hpp"
+#include "functions.cpp"
 
 /* We will use this renderer to draw into this window every frame. */
 static SDL_Window *window = NULL;
@@ -52,15 +52,14 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
-/* This function runs once per frame, and is the heart of the program. */
+/* This function runs once per frame.*/
 SDL_AppResult SDL_AppIterate(void *appstate)
 {   
-    /* as you can see from this, rendering draws over whatever was drawn before it. */
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);  /* Background color */
     SDL_RenderClear(renderer);  /* start with a blank canvas. */
 
     //Create rectangle object
-    static Box myBox(renderer, 200, 50, 255, 255, 200, 200);
+    static Box myBox(renderer, 200, 50, 255, 255, 0, 0, WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
     myBox.updateX(mousePosX);
     myBox.updateY(mousePosY);
