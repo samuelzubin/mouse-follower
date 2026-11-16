@@ -1,19 +1,4 @@
-#define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include "functions.cpp"
-
-/* We will use this renderer to draw into this window every frame. */
-static SDL_Window *window = NULL;
-static SDL_Renderer *renderer = NULL;
-
-/* Window Size */
-const int WINDOW_SIZE_X = 1920/2;
-const int WINDOW_SIZE_Y = 1080/2;
-
-/* Mouse following */
-float mousePosX;
-float mousePosY;
+#include "main.hpp"
 
 /* This function runs once at startup. */
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
